@@ -21,3 +21,21 @@ jobs:
 
       - name: Run unit tests
         run: pytest
+
+  sast-scan:
+    needs: build-and-test
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Install Semgrep
+        run: pip install semgrep
+
+      - name: Run Semgrep
+        run: semgrep scan --config p/python --metrics=off --error .
