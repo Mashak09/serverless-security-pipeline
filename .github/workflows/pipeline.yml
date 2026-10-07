@@ -71,3 +71,59 @@ jobs:
         uses: gitleaks/gitleaks-action@v2
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  template-scan:
+    needs: build-and-test
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Install cfn-lint
+        run: pip install cfn-lint
+
+      - name: Lint the SAM template
+        run: cfn-lint template.yaml
+
+      - name: Check for wildcard IAM permissions
+        run: |
+          P1="(Action|Resource):[[:space:]]*\[?['\"]?\*['\"]?"
+          P2="^[[:space:]]*-[[:space:]]*['\"]?\*['\"]?[[:space:]]*$"
+          if grep -nE -e "$P1" -e "$P2" template.yaml; then
+            echo "Wildcard IAM permission found in template.yaml"
+            exit 1
+          fi
+          echo "No wildcard IAM permissions found"
+
+  template-scan:
+    needs: build-and-test
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Install cfn-lint
+        run: pip install cfn-lint
+
+      - name: Lint the SAM template
+        run: cfn-lint template.yaml
+
+      - name: Check for wildcard IAM permissions
+        run: |
+          P1="(Action|Resource):[[:space:]]*\[?['\"]?\*['\"]?"
+          P2="^[[:space:]]*-[[:space:]]*['\"]?\*['\"]?[[:space:]]*$"
+          if grep -nE -e "$P1" -e "$P2" template.yaml; then
+            echo "Wildcard IAM permission found in template.yaml"
+            exit 1
+          fi
+          echo "No wildcard IAM permissions found"
