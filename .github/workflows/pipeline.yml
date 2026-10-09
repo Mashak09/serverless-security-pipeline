@@ -126,26 +126,6 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: eu-central-1
 
-  deploy:
-    needs: [sast-scan, dependency-scan, secrets-scan, template-scan]
-    runs-on: ubuntu-24.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v6
-
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.13'
-
-      - name: Install SAM CLI
-        run: pip install aws-sam-cli
-
-      - name: Build
-        run: sam build
-
-      - name: Deploy
-        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
