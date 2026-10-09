@@ -1,0 +1,12 @@
+version = 0.1
+
+[default.deploy.parameters]
+stack_name = "serverless-security-pipeline"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-lm8hitm8yiso"
+s3_prefix = "serverless-security-pipeline"
+region = "eu-central-1"
+capabilities = "CAPABILITY_IAM"
+image_repositories = []
+
+[default.global.parameters]
+region = "eu-central-1"
