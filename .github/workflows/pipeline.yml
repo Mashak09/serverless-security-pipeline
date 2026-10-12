@@ -3,6 +3,8 @@ name: Serverless CI/CD Security Pipeline
 on:
   push:
     branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
   build-and-test:
@@ -103,6 +105,7 @@ jobs:
 
   deploy:
     needs: [sast-scan, dependency-scan, secrets-scan, template-scan]
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
