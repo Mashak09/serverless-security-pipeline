@@ -12,3 +12,6 @@ def test_body_contains_message():
     response = lambda_handler({}, None)
     body = json.loads(response["body"])
     assert "message" in body
+
+def test_deliberately_failing():
+    assert 1 == 2
