@@ -11,6 +11,16 @@ Resources:
       CodeUri: src/
       MemorySize: 128
       Timeout: 5
+Policies:
+        - Statement:
+            - Effect: Allow
+              Action: '*'
+              Resource: '*'
+Policies:
+        - Statement:
+            - Effect: Allow
+              Action: '*'
+              Resource: '*'
       Events:
         HelloApi:
           Type: Api
