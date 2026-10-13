@@ -1,0 +1,2 @@
+# TEMPORARY TEST FILE - fake key, not tied to any account
+AWS_ACCESS_KEY_ID = "AKIAZ7Q3N5XTWB2PRLMD"
